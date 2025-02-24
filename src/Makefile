@@ -438,6 +438,12 @@ cutlass:
 	# cp $(BINDIR)/$(BINSUBDIR)/cutlass_perf_test_k1 $(BINDIR)/$(BINSUBDIR)/cutlass_perf_test_k2
 	# cp $(BINDIR)/$(BINSUBDIR)/cutlass_perf_test_k1 $(BINDIR)/$(BINSUBDIR)/cutlass_perf_test_k3
 
+cublaslt:
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	echo $(BINDIR)
+	$(SETENV) mkdir -p cuda/cublas-bench/cublaslt_gemm/build && cd cuda/cublas-bench/cublaslt_gemm/build && cmake .. && make -j12
+	echo $(BINDIR)
+	cp cuda/cublas-bench/cublaslt_gemm/build/cublaslt_gemm $(BINDIR)/$(BINSUBDIR)/cublaslt_gemm
 
 cutlass_examples_turing:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
