@@ -13,7 +13,7 @@
 #define BLOCKS_NUM 160
 #define THREADS_NUM 1024 //thread number/block
 #define TOTAL_THREADS (BLOCKS_NUM*THREADS_NUM)
-#define ARRAY_SIZE 8388608   //Array size has to exceed L2 size to avoid L2 cache residence
+#define ARRAY_SIZE 8388608*4   //Array size has to exceed L2 size to avoid L2 cache residence
 #define WARP_SIZE 32 
 #define L2_SIZE 1572864 //number of floats L2 can store
 #define clock_freq_MHZ 1132
