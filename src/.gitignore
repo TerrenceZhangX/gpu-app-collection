@@ -52,7 +52,8 @@ cuda/lonestargpu-2.0/apps/sp/nsp
 cuda/lonestargpu-2.0/apps/sssp/sssp
 cuda/lonestargpu-2.0/apps/sssp/sssp-wlc
 cuda/lonestargpu-2.0/apps/sssp/sssp-wln
-cuda/GPU_Microbenchmark/MaxFlops/MaxFlops
+cuda/GPU_Microbenchmark/MaxFlopsFP32/MaxFlopsFP32
+cuda/GPU_Microbenchmark/MaxFlopsFP16_TC/MaxFlopsFP16_TC
 cuda/GPU_Microbenchmark/l1_bw_128/l1_bw_128
 cuda/GPU_Microbenchmark/l1_bw_32f/l1_bw_32f
 cuda/GPU_Microbenchmark/l1_bw_32f_unroll/l1_bw_32f_unroll
@@ -67,6 +68,7 @@ cuda/GPU_Microbenchmark/l2_lat/l2_lat
 cuda/GPU_Microbenchmark/mem_bw/mem_bw
 cuda/GPU_Microbenchmark/mem_lat/mem_lat
 cuda/GPU_Microbenchmark/shared_bw/shared_bw
+cuda/GPU_Microbenchmark/shared_bank_conflicts/shared_bank_conflicts
 cuda/GPU_Microbenchmark/shared_lat/shared_lat
 cuda/rodinia/3.1/cuda/leukocyte/meschach_lib/confdefs.h
 cuda/rodinia/3.1/cuda/leukocyte/meschach_lib/config.log
