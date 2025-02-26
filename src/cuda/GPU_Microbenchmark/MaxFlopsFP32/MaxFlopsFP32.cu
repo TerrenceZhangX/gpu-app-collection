@@ -4,7 +4,9 @@
 
 #define THREADS_PER_BLOCK 1024
 #define THREADS_PER_SM 1024
-#define BLOCKS_NUM 1
+#define BLOCKS_NUM 80
+#define V100_SM_NUM 80
+#define V100_CLK_MHZ 1132
 #define TOTAL_THREADS (THREADS_PER_BLOCK*BLOCKS_NUM)
 #define WARP_SIZE 32
 #define REPEAT_TIMES 1024
@@ -95,6 +97,7 @@ int main(){
 	float flops;
 	flops = (float)(REPEAT_TIMES*THREADS_PER_SM*8)/((float)(stopClk[0]-startClk[0]));
 	printf("FLOP per SM = %f (flop/clk/SM)\n", flops);
+	printf("Total FLOPS per GPU = %f (TFLOPS)\n",flops*V100_SM_NUM*V100_CLK_MHZ/1e6);
 	printf("Total Clk number = %u \n", stopClk[0]-startClk[0]);
 
 	return 0;
