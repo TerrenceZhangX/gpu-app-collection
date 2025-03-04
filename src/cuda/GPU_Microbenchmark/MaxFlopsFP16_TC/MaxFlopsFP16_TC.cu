@@ -6,7 +6,9 @@
 
 
 #define V100_SM_NUM 80
-#define V100_CLK_MHZ 1132.0
+#define V100_CLK_MHZ 1380.0
+#define BLOCK_NUM 256
+#define WARP_SIZE 32
 
 static __shared__ float tensor_out;
 static __global__ void tensor_f16f16f32_hammer_kernel()
@@ -34,7 +36,7 @@ static __global__ void tensor_f16f16f32_hammer_kernel()
     
     __syncthreads();
 
-    for (int it = 0; it < 102400; ++it) {
+    for (int it = 0; it < 1024; ++it) {
         #pragma unroll
         for (int i = 0; i < 32; ++i) {
             asm (
@@ -63,7 +65,7 @@ static __global__ void tensor_f16f16f32_hammer_kernel()
 
 int main() {
 	dim3 grid = dim3(1, 1, 1);
-    dim3 block = dim3(128, 1, 1);
+    dim3 block = dim3(BLOCK_NUM, 1, 1);
     
 	cudaEvent_t start, stop;
     cudaEventCreate(&start);
@@ -77,7 +79,7 @@ int main() {
     float milliseconds = 0;
     cudaEventElapsedTime(&milliseconds, start, stop);
 
-	double flops = 102400*32/V100_CLK_MHZ*(2*16*16*16*2);
+	double flops = 1024*32/V100_CLK_MHZ*(2*16*16*16)*(BLOCK_NUM/WARP_SIZE);
 
 	printf("Elapsed Time = %f ms\n",milliseconds);
 
