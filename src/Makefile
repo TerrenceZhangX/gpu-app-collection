@@ -432,11 +432,18 @@ cutlass:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
 	echo $(BINDIR)
 	git submodule init && git submodule update
-	$(SETENV) mkdir -p cuda/cutlass-bench/build && cd cuda/cutlass-bench/build && cmake .. -DUSE_GPGPUSIM=1 -DCUTLASS_NVCC_ARCHS=80 -DCMAKE_CUDA_ARCHITECTURES=80 -DCMAKE_CUDA_COMPILER=$(CUDA_INSTALL_PATH)/bin/nvcc && make cutlass_profiler -j12 && make cutlass_examples
+	$(SETENV) mkdir -p cuda/cutlass-bench/build && cd cuda/cutlass-bench/build && cmake .. && make cutlass_profiler -j24
 	echo $(BINDIR)
 	cp cuda/cutlass-bench/build/tools/profiler/cutlass_profiler $(BINDIR)/$(BINSUBDIR)/cutlass_profiler
 	find cuda/cutlass-bench/build/examples -type f -executable -exec sh -c 'cp "$$1" "$(BINDIR)/$(BINSUBDIR)/cutlass_$$(basename "$$1")"' sh {} \;
 
+cutlass_volta_gemm:
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	echo $(BINDIR)
+	git submodule init && git submodule update
+	$(SETENV) mkdir -p cuda/cutlass-bench/build && cd cuda/cutlass-bench/build && cmake .. && cd ./examples/07_volta_tensorop_gemm && make 07_volta_tensorop_gemm
+	echo $(BINDIR)
+	cp cuda/cutlass-bench/build/examples/07_volta_tensorop_gemm/07_volta_tensorop_gemm $(BINDIR)/$(BINSUBDIR)/07_volta_tensorop_gemm
 
 cublaslt:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
