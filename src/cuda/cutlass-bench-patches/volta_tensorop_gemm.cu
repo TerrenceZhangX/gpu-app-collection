@@ -200,11 +200,9 @@ int run(int length_m = 5120, int length_n = 4096, int length_k = 4096) {
 
   cudaError_t error = cudaGetDeviceProperties(&props, 0);
   if (error != cudaSuccess) {
-    std::cerr << "cudaGetDeviceProperties() returned an error: " << cudaGetErrorString(error) << std::endl;
-    return -1;
-  }
-
-  if (props.major != 7) {
+    std::cerr << "Warning: cudaGetDeviceProperties() returned an error: " << cudaGetErrorString(error)
+              << ". Skipping arch check." << std::endl;
+  } else if (props.major != 7) {
     std::cerr << "Volta Tensor Ops must be run on a machine with compute capability of 70, 72, or 75."
               << std::endl;
 
