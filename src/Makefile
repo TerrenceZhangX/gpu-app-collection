@@ -454,6 +454,12 @@ cublaslt:
 	echo $(BINDIR)
 	cp cuda/cublas-bench/cublaslt_gemm/build/cublaslt_gemm $(BINDIR)/$(BINSUBDIR)/cublaslt_gemm
 
+dse_bench:
+	mkdir -p $(BINDIR)/$(BINSUBDIR)/
+	$(SETENV) make -C cuda/dse-bench clean all
+	cp cuda/dse-bench/vectorAdd/vectorAdd $(BINDIR)/$(BINSUBDIR)/vectorAdd
+	cp cuda/dse-bench/gemm/gemm_volta $(BINDIR)/$(BINSUBDIR)/gemm_volta
+
 cutlass_examples_turing:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
 	git submodule init && git submodule update
