@@ -441,6 +441,8 @@ cutlass_volta_gemm:
 	mkdir -p $(BINDIR)/$(BINSUBDIR)/
 	echo $(BINDIR)
 	git submodule init && git submodule update
+	@echo "Applying local patches to cutlass-bench..."
+	cp cuda/cutlass-bench-patches/volta_tensorop_gemm.cu cuda/cutlass-bench/examples/07_volta_tensorop_gemm/volta_tensorop_gemm.cu
 	$(SETENV) mkdir -p cuda/cutlass-bench/build && cd cuda/cutlass-bench/build && cmake .. && cd ./examples/07_volta_tensorop_gemm && make 07_volta_tensorop_gemm
 	echo $(BINDIR)
 	cp cuda/cutlass-bench/build/examples/07_volta_tensorop_gemm/07_volta_tensorop_gemm $(BINDIR)/$(BINSUBDIR)/07_volta_tensorop_gemm
