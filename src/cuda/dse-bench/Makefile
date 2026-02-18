@@ -31,11 +31,20 @@ vectorAdd/vectorAdd_vec4_unroll2: vectorAdd/vectorAdd_vec4_unroll2.cu
 	$(NVCC) $(NVCC_FLAGS) -o $@ $<
 
 # ── GEMM (CUTLASS Volta TensorOp) ───────────────────────────────
-gemm: gemm/gemm_volta
+GEMM_BINS := gemm/gemm_volta gemm/gemm_volta_splitk gemm/gemm_volta_64x64
+
+gemm: $(GEMM_BINS)
+
 gemm/gemm_volta: gemm/gemm_volta.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
+
+gemm/gemm_volta_splitk: gemm/gemm_volta_splitk.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
+
+gemm/gemm_volta_64x64: gemm/gemm_volta_64x64.cu
 	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
 
 clean:
 	rm -f vectorAdd/vectorAdd vectorAdd/vectorAdd_vec4 \
 	      vectorAdd/vectorAdd_unroll4 vectorAdd/vectorAdd_vec4_unroll2 \
-	      gemm/gemm_volta
+	      $(GEMM_BINS)
