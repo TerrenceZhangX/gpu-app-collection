@@ -1,3 +1,12 @@
-# Compiled binaries
+# Built binaries
 vectorAdd/vectorAdd
+vectorAdd/vectorAdd_vec4
+vectorAdd/vectorAdd_unroll4
+vectorAdd/vectorAdd_vec4_unroll2
 gemm/gemm_volta
+gemm/gemm_volta_splitk
+gemm/gemm_volta_64x64
+gemm/gemm_volta_3stage
+gemm/gemm_volta_swizzle
+gemm/gemm_volta_splitk_swizzle
+gemm/gemm_volta_64x64_swizzle

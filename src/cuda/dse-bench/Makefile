@@ -31,7 +31,9 @@ vectorAdd/vectorAdd_vec4_unroll2: vectorAdd/vectorAdd_vec4_unroll2.cu
 	$(NVCC) $(NVCC_FLAGS) -o $@ $<
 
 # ── GEMM (CUTLASS Volta TensorOp) ───────────────────────────────
-GEMM_BINS := gemm/gemm_volta gemm/gemm_volta_splitk gemm/gemm_volta_64x64
+GEMM_BINS := gemm/gemm_volta gemm/gemm_volta_splitk gemm/gemm_volta_64x64 \
+             gemm/gemm_volta_3stage gemm/gemm_volta_swizzle \
+             gemm/gemm_volta_splitk_swizzle gemm/gemm_volta_64x64_swizzle
 
 gemm: $(GEMM_BINS)
 
@@ -42,6 +44,19 @@ gemm/gemm_volta_splitk: gemm/gemm_volta_splitk.cu
 	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
 
 gemm/gemm_volta_64x64: gemm/gemm_volta_64x64.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
+
+gemm/gemm_volta_3stage: gemm/gemm_volta_3stage.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $< || \
+	  echo ">>> 3-stage FAILED to compile (expected: MmaMultistage needs cp.async / sm_80+)"
+
+gemm/gemm_volta_swizzle: gemm/gemm_volta_swizzle.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
+
+gemm/gemm_volta_splitk_swizzle: gemm/gemm_volta_splitk_swizzle.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
+
+gemm/gemm_volta_64x64_swizzle: gemm/gemm_volta_64x64_swizzle.cu
 	$(NVCC) $(NVCC_FLAGS) $(CUTLASS_INC) $(CUTLASS_DEFS) --expt-relaxed-constexpr -o $@ $<
 
 clean:
